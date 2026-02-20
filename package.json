@@ -1,0 +1,22 @@
+{
+  "name": "instagram-carousel-automation",
+  "version": "1.0.0",
+  "description": "6명의 AI 에이전트가 협업하여 인스타그램 마케팅 캐러셀 콘텐츠를 자동 생성하고 업로드하는 시스템",
+  "type": "module",
+  "scripts": {
+    "collect-insights": "node src/collect-insights.js",
+    "generate-images": "node src/generate-images.js",
+    "upload": "node src/upload-instagram.js",
+    "pipeline": "bash scripts/run-pipeline.sh",
+    "orchestrate": "node src/pipeline-orchestrator.js",
+    "test:images": "node src/generate-images.js --test",
+    "test:upload": "node src/upload-instagram.js --test",
+    "test:orchestrate": "node src/pipeline-orchestrator.js --test"
+  },
+  "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.2.49",
+    "dotenv": "^16.4.0",
+    "playwright": "^1.50.0",
+    "sharp": "^0.33.0"
+  }
+}

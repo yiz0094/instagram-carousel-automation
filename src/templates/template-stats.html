@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1080, height=1350">
+  <title>Stats Template</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    :root {
+      --primary: {{primaryColor}};
+      --secondary: {{secondaryColor}};
+      --accent: {{accentColor}};
+      --background: {{backgroundColor}};
+      --text-color: {{textColor}};
+    }
+
+    /* ============================================================
+       COVER SLIDE - Big stat hook on dark bg
+       ============================================================ */
+    .cover {
+      width: 1080px;
+      height: 1350px;
+      background: linear-gradient(160deg, #0d2b2f, var(--secondary), #0a1f22);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 100px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Cover background image (from Pexels) */
+    .cover .cover-bg-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-size: cover;
+      background-position: center;
+      z-index: 0;
+    }
+
+    /* Dark overlay for text readability over photo */
+    .cover .cover-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(180deg,
+        rgba(23,54,60,0.3) 0%,
+        rgba(23,54,60,0.55) 40%,
+        rgba(23,54,60,0.85) 100%);
+      z-index: 1;
+    }
+
+    /* Photo credit (bottom-right) */
+    .cover .photo-credit {
+      position: absolute;
+      bottom: 20px;
+      right: 30px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.3);
+      z-index: 3;
+      letter-spacing: 0.02em;
+    }
+
+    /* Top accent line */
+    .cover .top-accent {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--accent), transparent);
+    }
+
+    /* Brand logo area */
+    .cover .brand-area {
+      position: absolute;
+      top: 60px;
+      left: 80px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      z-index: 3;
+    }
+    .cover .brand-bar {
+      width: 3px;
+      height: 40px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+    .cover .brand-name {
+      font-size: 22px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.05em;
+    }
+
+    /* Decorative ring behind stat */
+    .cover .stat-ring {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -55%);
+      width: 380px;
+      height: 380px;
+      border-radius: 50%;
+      border: 3px solid var(--primary);
+      opacity: 0.15;
+    }
+    .cover .stat-ring-inner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -55%);
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      border: 2px dashed var(--accent);
+      opacity: 0.1;
+    }
+
+    /* Glow behind stat */
+    .cover .stat-glow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -55%);
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(ellipse, rgba({{primaryRgb}},0.15), transparent 70%);
+    }
+
+    .cover .emoji-area {
+      font-size: 60px;
+      margin-bottom: 32px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .cover .big-stat {
+      font-size: 140px;
+      font-weight: 900;
+      color: var(--primary);
+      line-height: 1;
+      letter-spacing: -0.05em;
+      position: relative;
+      z-index: 2;
+      margin-bottom: 24px;
+    }
+
+    .cover .cover-headline {
+      font-size: 48px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.3;
+      word-break: keep-all;
+      position: relative;
+      z-index: 2;
+      margin-bottom: 24px;
+      max-width: 800px;
+    }
+
+    .cover .cover-subtext {
+      font-size: 26px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.5;
+      word-break: keep-all;
+      position: relative;
+      z-index: 2;
+      max-width: 600px;
+    }
+
+    .cover .bottom-indicator {
+      position: absolute;
+      bottom: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 2;
+    }
+
+    .cover .indicator-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+    }
+    .cover .indicator-dot.active {
+      width: 24px;
+      border-radius: 4px;
+      background: var(--primary);
+      opacity: 0.6;
+    }
+
+    /* ============================================================
+       CONTENT SLIDE - Data point focus on dark bg
+       ============================================================ */
+    .content {
+      width: 1080px;
+      height: 1350px;
+      background: var(--secondary);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Brand logo area */
+    .content .brand-area {
+      position: absolute;
+      top: 60px;
+      left: 80px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      z-index: 3;
+    }
+    .content .brand-bar {
+      width: 3px;
+      height: 36px;
+      background: var(--primary);
+      border-radius: 2px;
+      opacity: 0.6;
+    }
+    .content .brand-name {
+      font-size: 20px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.05em;
+    }
+
+    .content .top-accent {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--accent), transparent);
+    }
+
+    /* Subtle bg gradient */
+    .content .bg-gradient {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg, rgba({{primaryRgb}},0.06) 0%, transparent 50%, rgba({{accentRgb}},0.04) 100%);
+    }
+
+    /* Large subtle background number */
+    .content .bg-watermark {
+      position: absolute;
+      top: -40px;
+      right: -20px;
+      font-size: 400px;
+      font-weight: 900;
+      color: rgba(255,255,255,0.04);
+      line-height: 1;
+      letter-spacing: -0.05em;
+      pointer-events: none;
+    }
+
+    /* Step indicator bar */
+    .content .step-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 60px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .content .step-segment {
+      height: 6px;
+      border-radius: 3px;
+      flex: 1;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .content .step-segment.filled {
+      background: var(--primary);
+      opacity: 0.8;
+    }
+
+    /* Stat number area */
+    .content .stat-area {
+      position: relative;
+      z-index: 2;
+      margin-bottom: 40px;
+    }
+
+    .content .stat-label {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 12px;
+    }
+
+    .content .stat-number {
+      font-size: 100px;
+      font-weight: 900;
+      color: var(--primary);
+      line-height: 1.1;
+      letter-spacing: -0.04em;
+    }
+
+    /* Divider */
+    .content .stat-divider {
+      width: 80px;
+      height: 4px;
+      background: var(--primary);
+      border-radius: 2px;
+      margin-bottom: 40px;
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Content text */
+    .content .content-headline {
+      font-size: 40px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.35;
+      word-break: keep-all;
+      margin-bottom: 24px;
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+    }
+
+    .content .content-body {
+      font-size: 28px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.85;
+      word-break: keep-all;
+      position: relative;
+      z-index: 2;
+      max-width: 750px;
+    }
+
+    .content .content-highlight {
+      display: inline-block;
+      padding: 14px 32px;
+      border-radius: 8px;
+      background: var(--primary);
+      color: #ffffff;
+      font-size: 26px;
+      font-weight: 700;
+      margin-top: 40px;
+      word-break: keep-all;
+    }
+
+    /* Bottom info area */
+    .content .content-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: absolute;
+      bottom: 50px;
+      left: 80px;
+      right: 80px;
+      z-index: 2;
+    }
+
+    .content .bottom-line {
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.08);
+      margin-right: 20px;
+    }
+
+    .content .bottom-num {
+      font-size: 18px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* ============================================================
+       DESIGN TOKEN VARIANTS
+       ============================================================ */
+
+    .content.layout-centered {
+      align-items: center;
+      text-align: center;
+    }
+    .content.layout-centered .step-bar { justify-content: center; }
+    .content.layout-centered .stat-area { text-align: center; }
+    .content.layout-centered .stat-divider { margin-left: auto; margin-right: auto; }
+    .content.layout-centered .content-headline { text-align: center; max-width: 800px; }
+    .content.layout-centered .content-body { text-align: center; max-width: 750px; }
+
+    .content.layout-card {
+      padding: 100px 80px;
+      align-items: center;
+    }
+    .content.layout-card .card-inner {
+      background: rgba(255,255,255,0.05);
+      border-radius: 24px;
+      padding: 56px 48px;
+      border: 1px solid rgba(255,255,255,0.08);
+      text-align: center;
+      max-width: 860px;
+      width: 100%;
+    }
+
+    .content.bg-light-tint {
+      background: linear-gradient(180deg, var(--secondary) 0%, #0d2b2f 100%);
+    }
+    .content.bg-subtle-gradient {
+      background: linear-gradient(170deg, var(--secondary) 0%, #0a2328 100%);
+    }
+    .content.bg-accent-block-top::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 200px;
+      background: linear-gradient(180deg, rgba({{primaryRgb}},0.15), transparent);
+      z-index: 0;
+    }
+
+    .content.deco-minimal .bg-watermark { display: none; }
+    .content.deco-minimal .step-bar { display: none; }
+    .content.deco-rich .bg-watermark { color: rgba(255,255,255,0.06); }
+
+    /* ============================================================
+       CTA SLIDE - Summary with key stat
+       ============================================================ */
+    .cta {
+      width: 1080px;
+      height: 1350px;
+      background: linear-gradient(160deg, #0d2b2f, var(--secondary), #0a1f22);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 100px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta .top-accent {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--accent), transparent);
+    }
+
+    .cta .glow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(ellipse, rgba({{primaryRgb}},0.1), transparent 70%);
+    }
+
+    .cta .cta-stat {
+      font-size: 100px;
+      font-weight: 900;
+      color: var(--primary);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .cta .cta-stat-label {
+      font-size: 24px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.4);
+      letter-spacing: 0.1em;
+      margin-bottom: 48px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .cta .cta-divider {
+      width: 60px;
+      height: 3px;
+      background: var(--primary);
+      border-radius: 2px;
+      margin-bottom: 48px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .cta .cta-headline {
+      font-size: 44px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.35;
+      word-break: keep-all;
+      margin-bottom: 28px;
+      position: relative;
+      z-index: 2;
+      max-width: 750px;
+    }
+
+    .cta .cta-body {
+      font-size: 28px;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.6;
+      word-break: keep-all;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 2;
+      max-width: 650px;
+    }
+
+    .cta .cta-subtext {
+      font-size: 22px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.35);
+      position: relative;
+      z-index: 2;
+    }
+
+    .cta .brand-logo {
+      position: absolute;
+      bottom: 60px;
+      right: 80px;
+      z-index: 2;
+    }
+    .cta .brand-logo-text {
+      font-size: 36px;
+      font-weight: 800;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.08em;
+      line-height: 1.1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- COVER SLIDE -->
+  <div class="cover" id="slide-cover">
+    <div class="cover-bg-image" id="cover-bg"></div>
+    <div class="cover-overlay" id="cover-overlay"></div>
+
+    <div class="top-accent"></div>
+    <div class="stat-glow"></div>
+    <div class="stat-ring"></div>
+    <div class="stat-ring-inner"></div>
+
+    <div class="brand-area">
+      <div class="brand-bar"></div>
+      <span class="brand-name"></span>
+    </div>
+
+    <div class="emoji-area">{{emoji}}</div>
+    <div class="big-stat">{{highlight}}</div>
+    <h1 class="cover-headline">{{headline}}</h1>
+    <p class="cover-subtext">{{subtext}}</p>
+
+    <div class="bottom-indicator" id="cover-dots"></div>
+    <span class="photo-credit" id="photo-credit"></span>
+  </div>
+
+  <!-- CONTENT SLIDE -->
+  <div class="content {{layoutVariant}} {{backgroundStyle}} {{decoClass}}" id="slide-content" style="display:none;">
+    <div class="top-accent"></div>
+    <div class="bg-gradient"></div>
+    <div class="bg-watermark">{{slideNumber}}</div>
+
+    <div class="brand-area">
+      <div class="brand-bar"></div>
+      <span class="brand-name"></span>
+    </div>
+
+    <div class="step-bar" id="step-bar"></div>
+
+    <div class="stat-area">
+      <div class="stat-label" id="stat-label">DATA POINT</div>
+      <div>
+        <span class="stat-number">{{highlight}}</span>
+      </div>
+    </div>
+
+    <div class="stat-divider"></div>
+
+    <h2 class="content-headline">{{headline}}</h2>
+    <div class="content-body">{{body}}</div>
+
+    <div class="content-bottom">
+      <div class="bottom-line"></div>
+      <span class="bottom-num">{{slideNumber}} / {{totalSlides}}</span>
+    </div>
+  </div>
+
+  <!-- CTA SLIDE -->
+  <div class="cta" id="slide-cta" style="display:none;">
+    <div class="top-accent"></div>
+    <div class="glow"></div>
+
+    <div class="cta-stat">{{highlight}}</div>
+    <div class="cta-stat-label">KEY INSIGHT</div>
+    <div class="cta-divider"></div>
+
+    <h2 class="cta-headline">{{headline}}</h2>
+    <p class="cta-body">{{body}}</p>
+    <p class="cta-subtext">{{subtext}}</p>
+
+    <div class="brand-logo">
+      <div class="brand-logo-text"></div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      var slideNumber = parseInt('{{slideNumber}}', 10);
+      var totalSlides = parseInt('{{totalSlides}}', 10);
+
+      var cover = document.getElementById('slide-cover');
+      var content = document.getElementById('slide-content');
+      var cta = document.getElementById('slide-cta');
+
+      cover.style.display = 'none';
+      content.style.display = 'none';
+      cta.style.display = 'none';
+
+      if (slideNumber === 1) {
+        cover.style.display = 'flex';
+        // Apply cover background image if available
+        var hasCoverImage = '{{hasCoverImage}}';
+        if (hasCoverImage === 'true') {
+          document.getElementById('cover-bg').style.backgroundImage = 'url({{coverImageUrl}})';
+          document.getElementById('photo-credit').textContent = 'Photo by {{photographerName}} / Pexels';
+        } else {
+          document.getElementById('cover-overlay').style.display = 'none';
+        }
+        var dotsArea = document.getElementById('cover-dots');
+        for (var i = 1; i <= totalSlides; i++) {
+          var dot = document.createElement('div');
+          dot.className = 'indicator-dot' + (i === 1 ? ' active' : '');
+          dotsArea.appendChild(dot);
+        }
+      } else if (slideNumber === totalSlides) {
+        cta.style.display = 'flex';
+      } else {
+        content.style.display = 'flex';
+
+        var stepBar = document.getElementById('step-bar');
+        var contentSlides = totalSlides - 2;
+        var currentContentSlide = slideNumber - 1;
+        for (var i = 1; i <= contentSlides; i++) {
+          var seg = document.createElement('div');
+          seg.className = 'step-segment' + (i <= currentContentSlide ? ' filled' : '');
+          stepBar.appendChild(seg);
+        }
+      }
+    })();
+  </script>
+</body>
+</html>

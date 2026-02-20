@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1080, height=1350">
+  <title>Tips Template</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    :root {
+      --primary: {{primaryColor}};
+      --secondary: {{secondaryColor}};
+      --accent: {{accentColor}};
+      --background: {{backgroundColor}};
+      --text-color: {{textColor}};
+    }
+
+    /* ============================================================
+       COVER SLIDE (slideNumber == 1)
+       Dark bg + large bold text + brand logo area
+       ============================================================ */
+    .cover {
+      width: 1080px;
+      height: 1350px;
+      background: linear-gradient(160deg, #0d2b2f, var(--secondary), #0a1f22);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      text-align: left;
+      padding: 100px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Cover background image (from Pexels) */
+    .cover .cover-bg-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-size: cover;
+      background-position: center;
+      z-index: 0;
+    }
+
+    /* Dark overlay for text readability over photo */
+    .cover .cover-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(180deg,
+        rgba(23,54,60,0.3) 0%,
+        rgba(23,54,60,0.55) 40%,
+        rgba(23,54,60,0.85) 100%);
+      z-index: 1;
+    }
+
+    /* Photo credit (bottom-right) */
+    .cover .photo-credit {
+      position: absolute;
+      bottom: 20px;
+      right: 30px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.3);
+      z-index: 3;
+      letter-spacing: 0.02em;
+    }
+
+    /* Subtle gradient glow */
+    .cover .glow-1 {
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(ellipse at top right, rgba({{primaryRgb}},0.2), transparent 70%);
+    }
+    .cover .glow-2 {
+      position: absolute;
+      bottom: -150px;
+      left: -100px;
+      width: 450px;
+      height: 450px;
+      background: radial-gradient(ellipse, rgba({{accentRgb}},0.12), transparent 70%);
+    }
+
+    /* Brand logo area (top-left) */
+    .cover .brand-area {
+      position: absolute;
+      top: 60px;
+      left: 80px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      z-index: 3;
+    }
+    .cover .brand-bar {
+      width: 3px;
+      height: 40px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+    .cover .brand-name {
+      font-size: 22px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.05em;
+    }
+
+    /* Top accent line */
+    .cover .top-line {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--accent), transparent);
+    }
+
+    .cover .emoji-area {
+      font-size: 64px;
+      margin-bottom: 36px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .cover .cover-headline {
+      font-size: 62px;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      word-break: keep-all;
+      margin-bottom: 28px;
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+    }
+
+    .cover .cover-subtext {
+      font-size: 26px;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.5);
+      line-height: 1.6;
+      word-break: keep-all;
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+    }
+
+    /* Bottom info */
+    .cover .bottom-info {
+      position: absolute;
+      bottom: 60px;
+      left: 80px;
+      right: 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 2;
+    }
+
+    .cover .slide-indicator {
+      font-size: 18px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.1em;
+    }
+
+    .cover .swipe-hint {
+      font-size: 18px;
+      color: rgba(255,255,255,0.3);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cover .swipe-arrow {
+      display: inline-block;
+      width: 40px;
+      height: 1px;
+      background: rgba(255,255,255,0.3);
+      position: relative;
+    }
+    .cover .swipe-arrow::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: -3px;
+      width: 8px;
+      height: 8px;
+      border-right: 1px solid rgba(255,255,255,0.3);
+      border-top: 1px solid rgba(255,255,255,0.3);
+      transform: rotate(45deg);
+    }
+
+    /* ============================================================
+       CONTENT SLIDE (middle slides)
+       Dark background + mint highlight box + white text
+       ============================================================ */
+    .content {
+      width: 1080px;
+      height: 1350px;
+      background: var(--secondary);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 100px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Brand logo area (top-left) */
+    .content .brand-area {
+      position: absolute;
+      top: 60px;
+      left: 80px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      z-index: 3;
+    }
+    .content .brand-bar {
+      width: 3px;
+      height: 36px;
+      background: var(--primary);
+      border-radius: 2px;
+      opacity: 0.6;
+    }
+    .content .brand-name {
+      font-size: 20px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.05em;
+    }
+
+    /* Subtle background gradient */
+    .content .bg-gradient {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg, rgba({{primaryRgb}},0.06) 0%, transparent 50%, rgba({{accentRgb}},0.04) 100%);
+    }
+
+    /* Slide number - circled style */
+    .content .number-circle {
+      width: 56px;
+      height: 56px;
+      border: 2px solid rgba(255,255,255,0.25);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 36px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .content .content-headline {
+      font-size: 44px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.35;
+      letter-spacing: -0.02em;
+      word-break: keep-all;
+      margin-bottom: 36px;
+      position: relative;
+      z-index: 2;
+      max-width: 850px;
+    }
+
+    /* Highlight box - mint green background */
+    .content .content-highlight {
+      display: inline-block;
+      padding: 14px 32px;
+      border-radius: 8px;
+      background: var(--primary);
+      color: #ffffff;
+      font-size: 30px;
+      font-weight: 700;
+      margin-bottom: 36px;
+      word-break: keep-all;
+      position: relative;
+      z-index: 2;
+    }
+
+    .content .content-body {
+      font-size: 28px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.85;
+      word-break: keep-all;
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+    }
+
+    /* Bottom slide indicator */
+    .content .content-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: absolute;
+      bottom: 50px;
+      left: 80px;
+      right: 80px;
+      z-index: 2;
+    }
+
+    .content .footer-line {
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.1);
+      margin-right: 20px;
+    }
+
+    .content .slide-num {
+      font-size: 18px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* ============================================================
+       DESIGN TOKEN VARIANTS (set by designer agent)
+       ============================================================ */
+
+    /* Layout variants */
+    .content.layout-centered {
+      align-items: center;
+      text-align: center;
+    }
+    .content.layout-centered .number-circle { margin-left: auto; margin-right: auto; }
+    .content.layout-centered .content-headline { max-width: 800px; }
+    .content.layout-centered .content-body { max-width: 750px; }
+
+    .content.layout-card {
+      padding: 100px 80px;
+      align-items: center;
+    }
+    .content.layout-card .card-inner {
+      background: rgba(255,255,255,0.06);
+      border-radius: 24px;
+      padding: 56px 48px;
+      border: 1px solid rgba(255,255,255,0.08);
+      text-align: center;
+      max-width: 860px;
+      width: 100%;
+    }
+
+    /* Background style variants */
+    .content.bg-light-tint {
+      background: linear-gradient(180deg, var(--secondary) 0%, #0d2b2f 100%);
+    }
+    .content.bg-subtle-gradient {
+      background: linear-gradient(170deg, var(--secondary) 0%, #0a2328 100%);
+    }
+    .content.bg-accent-block-top::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 200px;
+      background: linear-gradient(180deg, rgba({{primaryRgb}},0.15), transparent);
+      z-index: 0;
+    }
+
+    /* Number style variants */
+    .number-circle.num-small-badge {
+      width: 48px !important;
+      height: 48px !important;
+      font-size: 20px !important;
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #ffffff !important;
+    }
+    .number-circle.num-accent-circle {
+      width: 72px !important;
+      height: 72px !important;
+      font-size: 32px !important;
+      border-width: 3px;
+      border-color: var(--primary);
+      color: var(--primary) !important;
+    }
+    .number-circle.num-hidden { display: none; }
+
+    /* Decorative intensity variants */
+    .content.deco-minimal .brand-area { display: none; }
+    .content.deco-rich .bg-gradient { opacity: 1.5; }
+
+    /* ============================================================
+       CTA SLIDE (last slide)
+       Dark background + brand identity focus
+       ============================================================ */
+    .cta {
+      width: 1080px;
+      height: 1350px;
+      background: linear-gradient(160deg, #0d2b2f, var(--secondary), #0a1f22);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 100px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle glow */
+    .cta .glow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(ellipse, rgba({{primaryRgb}},0.08), transparent 70%);
+    }
+
+    .cta .top-line {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--accent), transparent);
+    }
+
+    .cta .emoji-area {
+      font-size: 64px;
+      margin-bottom: 36px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .cta .cta-headline {
+      font-size: 56px;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.25;
+      word-break: keep-all;
+      margin-bottom: 28px;
+      position: relative;
+      z-index: 2;
+      max-width: 850px;
+    }
+
+    .cta .cta-body {
+      font-size: 28px;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.65);
+      line-height: 1.7;
+      word-break: keep-all;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+    }
+
+    .cta .cta-subtext {
+      font-size: 24px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.4);
+      line-height: 1.5;
+      word-break: keep-all;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Brand logo (bottom-right) */
+    .cta .brand-logo {
+      position: absolute;
+      bottom: 60px;
+      right: 80px;
+      z-index: 2;
+    }
+    .cta .brand-logo-text {
+      font-size: 36px;
+      font-weight: 800;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.08em;
+      line-height: 1.1;
+    }
+  </style>
+</head>
+<body>
+  <!-- COVER SLIDE -->
+  <div class="cover" id="slide-cover">
+    <div class="cover-bg-image" id="cover-bg"></div>
+    <div class="cover-overlay" id="cover-overlay"></div>
+
+    <div class="top-line"></div>
+    <div class="glow-1"></div>
+    <div class="glow-2"></div>
+
+    <div class="brand-area">
+      <div class="brand-bar"></div>
+      <span class="brand-name"></span>
+    </div>
+
+    <div class="emoji-area">{{emoji}}</div>
+    <h1 class="cover-headline">{{headline}}</h1>
+    <p class="cover-subtext">{{subtext}}</p>
+
+    <div class="bottom-info">
+      <span class="slide-indicator">01 / {{totalSlides}}</span>
+      <span class="swipe-hint">
+        밀어서 계속 읽기
+        <span class="swipe-arrow"></span>
+      </span>
+    </div>
+
+    <span class="photo-credit" id="photo-credit"></span>
+  </div>
+
+  <!-- CONTENT SLIDE -->
+  <div class="content {{layoutVariant}} {{backgroundStyle}} {{decoClass}}" id="slide-content" style="display:none;">
+    <div class="bg-gradient"></div>
+
+    <div class="brand-area">
+      <div class="brand-bar"></div>
+      <span class="brand-name"></span>
+    </div>
+
+    <div class="number-circle {{numberStyle}}">{{slideNumber}}</div>
+    <div class="content-highlight" id="highlight-box" style="display:none;">{{highlight}}</div>
+    <h2 class="content-headline">{{headline}}</h2>
+    <div class="content-body">{{body}}</div>
+
+    <div class="content-footer">
+      <div class="footer-line"></div>
+      <span class="slide-num">{{slideNumber}} / {{totalSlides}}</span>
+    </div>
+  </div>
+
+  <!-- CTA SLIDE -->
+  <div class="cta" id="slide-cta" style="display:none;">
+    <div class="top-line"></div>
+    <div class="glow"></div>
+
+    <div class="emoji-area">{{emoji}}</div>
+    <h2 class="cta-headline">{{headline}}</h2>
+    <p class="cta-body">{{body}}</p>
+    <p class="cta-subtext">{{subtext}}</p>
+
+    <div class="brand-logo">
+      <div class="brand-logo-text"></div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      var slideNumber = parseInt('{{slideNumber}}', 10);
+      var totalSlides = parseInt('{{totalSlides}}', 10);
+
+      var cover = document.getElementById('slide-cover');
+      var content = document.getElementById('slide-content');
+      var cta = document.getElementById('slide-cta');
+
+      cover.style.display = 'none';
+      content.style.display = 'none';
+      cta.style.display = 'none';
+
+      if (slideNumber === 1) {
+        cover.style.display = 'flex';
+        // Apply cover background image if available
+        var hasCoverImage = '{{hasCoverImage}}';
+        if (hasCoverImage === 'true') {
+          document.getElementById('cover-bg').style.backgroundImage = 'url({{coverImageUrl}})';
+          document.getElementById('photo-credit').textContent = 'Photo by {{photographerName}} / Pexels';
+        } else {
+          document.getElementById('cover-overlay').style.display = 'none';
+        }
+      } else if (slideNumber === totalSlides) {
+        cta.style.display = 'flex';
+      } else {
+        content.style.display = 'flex';
+        var highlightText = '{{highlight}}';
+        if (highlightText && highlightText !== '' && highlightText !== '{{' + 'highlight}}') {
+          document.getElementById('highlight-box').style.display = 'inline-block';
+        }
+      }
+    })();
+  </script>
+</body>
+</html>

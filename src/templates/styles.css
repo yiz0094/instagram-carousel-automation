@@ -1,0 +1,314 @@
+/* ============================================================
+   Instagram Carousel Shared Styles
+   Viewport: 1080x1350 (4:5 aspect ratio)
+   ============================================================ */
+
+/* Font imports */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap');
+
+/* ---- Reset & Base ---- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 1080px;
+  height: 1350px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: 'Pretendard Variable', 'Pretendard', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 30px;
+  line-height: 1.5;
+  color: var(--text-color, #1a1a2e);
+  background-color: var(--background-color, #ffffff);
+}
+
+/* ---- CSS Custom Properties (set via template variables) ---- */
+:root {
+  --primary: #51B498;
+  --secondary: #17363C;
+  --accent: #3AA17E;
+  --background: #FAFFFE;
+  --text-color: #17363C;
+}
+
+/* ---- Typography Scale ---- */
+.headline {
+  font-size: 52px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+.headline-lg {
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  word-break: keep-all;
+}
+
+.headline-xl {
+  font-size: 80px;
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  word-break: keep-all;
+}
+
+.body-text {
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1.6;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+.body-text-lg {
+  font-size: 34px;
+  font-weight: 400;
+  line-height: 1.6;
+  word-break: keep-all;
+}
+
+.subtext {
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.5;
+  word-break: keep-all;
+}
+
+.highlight {
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1.4;
+  word-break: keep-all;
+}
+
+.number-display {
+  font-size: 120px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.number-display-xl {
+  font-size: 160px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+/* ---- Layout Utilities ---- */
+.slide {
+  width: 1080px;
+  height: 1350px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.slide-center {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.slide-padded {
+  padding: 80px;
+}
+
+.slide-padded-lg {
+  padding: 100px;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-start {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.gap-sm { gap: 16px; }
+.gap-md { gap: 24px; }
+.gap-lg { gap: 40px; }
+.gap-xl { gap: 60px; }
+
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.w-full { width: 100%; }
+.h-full { height: 100%; }
+
+.absolute { position: absolute; }
+.relative { position: relative; }
+.z-1 { z-index: 1; }
+.z-10 { z-index: 10; }
+
+/* ---- Decorative Elements ---- */
+.accent-line-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+}
+
+.accent-line-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--primary), var(--accent));
+}
+
+.accent-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  display: inline-block;
+}
+
+/* ---- Slide Indicators ---- */
+.slide-dots {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.slide-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transition: all 0.3s ease;
+}
+
+.slide-dot.active {
+  width: 28px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.slide-progress {
+  font-size: 20px;
+  font-weight: 500;
+  opacity: 0.5;
+}
+
+/* ---- Highlight Box ---- */
+.highlight-box {
+  display: inline-block;
+  padding: 12px 28px;
+  border-radius: 12px;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+/* ---- Emoji Display ---- */
+.emoji-lg {
+  font-size: 80px;
+  line-height: 1.2;
+}
+
+.emoji-xl {
+  font-size: 100px;
+  line-height: 1.2;
+}
+
+/* ---- Card Style ---- */
+.card {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 48px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+}
+
+/* ---- Gradient Backgrounds ---- */
+.gradient-primary {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+}
+
+.gradient-accent {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+}
+
+.gradient-warm {
+  background: linear-gradient(135deg, #ff6b6b, #ffa07a);
+}
+
+.gradient-dark {
+  background: linear-gradient(135deg, #0f0f1a, #1a1a3e);
+}
+
+/* ---- Quote / Bar styles ---- */
+.quote-bar {
+  width: 6px;
+  border-radius: 3px;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+/* ---- Decorative Shapes (CSS only) ---- */
+.deco-circle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.08;
+}
+
+.deco-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 3px solid;
+  opacity: 0.15;
+}
+
+.deco-grid {
+  position: absolute;
+  background-image:
+    radial-gradient(circle, currentColor 1.5px, transparent 1.5px);
+  background-size: 30px 30px;
+  opacity: 0.06;
+}

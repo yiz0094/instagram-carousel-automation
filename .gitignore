@@ -1,0 +1,5 @@
+node_modules/
+output/
+.env
+logs/
+data/pipeline-state.json

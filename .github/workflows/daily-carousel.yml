@@ -1,0 +1,73 @@
+name: Daily Instagram Carousel
+
+on:
+  schedule:
+    # UTC 01:00 = KST 10:00 (매일 오전 10시)
+    - cron: '0 1 * * *'
+  workflow_dispatch:
+    # GitHub UI에서 수동 실행 가능
+
+concurrency:
+  group: daily-carousel
+  cancel-in-progress: false
+
+permissions:
+  contents: write  # data 파일 커밋용
+
+jobs:
+  generate-and-post:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Playwright Chromium 캐시
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Install Playwright Chromium
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: npx playwright install chromium --with-deps
+
+      - name: Install Playwright system deps (cached)
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: npx playwright install-deps chromium
+
+      # 파이프라인 실행
+      - name: Run carousel pipeline
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          INSTAGRAM_BUSINESS_ACCOUNT_ID: ${{ secrets.INSTAGRAM_BUSINESS_ACCOUNT_ID }}
+          FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          TOKEN_EXPIRY_DATE: ${{ secrets.TOKEN_EXPIRY_DATE }}
+          FACEBOOK_APP_ID: ${{ secrets.FACEBOOK_APP_ID }}
+          FACEBOOK_APP_SECRET: ${{ secrets.FACEBOOK_APP_SECRET }}
+          IMGBB_API_KEY: ${{ secrets.IMGBB_API_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+        run: node src/pipeline-orchestrator.js
+
+      # 데이터 파일 변경분 커밋 & 푸시
+      - name: Commit updated data files
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/content-log.json data/topic-bank.json data/performance-log.json || true
+          git diff --staged --quiet || git commit -m "chore: update content log [$(date +%Y-%m-%d)]"
+          git push || true
