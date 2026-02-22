@@ -1,9 +1,16 @@
-name: Daily Instagram Carousel
+name: Instagram Carousel Pipeline
 
 on:
   schedule:
-    # UTC 01:00 = KST 10:00 (매일 오전 10시)
-    - cron: '0 1 * * *'
+    # 하루 7회 실행 (KST 기준)
+    # 08:00 KST = 23:00 UTC (전날)
+    # 11:00 KST = 02:00 UTC
+    # 13:00 KST = 04:00 UTC
+    # 16:00 KST = 07:00 UTC
+    # 18:00 KST = 09:00 UTC
+    # 20:00 KST = 11:00 UTC
+    # 22:00 KST = 13:00 UTC
+    - cron: '0 23,2,4,7,9,11,13 * * *'
   workflow_dispatch:
     # GitHub UI에서 수동 실행 가능
 
@@ -68,6 +75,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/content-log.json data/topic-bank.json data/performance-log.json || true
-          git diff --staged --quiet || git commit -m "chore: update content log [$(date +%Y-%m-%d)]"
+          git add data/content-log.json data/topic-bank.json data/performance-log.json data/pipeline-state.json || true
+          git diff --staged --quiet || git commit -m "chore: update content log $(TZ=Asia/Seoul date +'%Y-%m-%d %H:%M KST')"
           git push || true
