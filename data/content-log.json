@@ -1,39 +1,12 @@
 [
   {
-    "date": "2026-02-19",
-    "topic": "적은 예산으로 큰 효과를 내는 스타트업 마케팅 전략 8가지",
-    "category": "실전 마케팅 팁",
-    "keywords": [
-      "스타트업마케팅",
-      "저비용마케팅",
-      "마케팅예산",
-      "그로스해킹",
-      "효율적광고"
-    ],
-    "slideCount": 8,
-    "format": "tips",
-    "postId": "test_post_id_12345"
-  },
-  {
     "date": "2026-02-20",
-    "category": "general",
+    "topic": "(메타데이터 복구 불가)",
+    "category": "unknown",
     "keywords": [],
     "slideCount": 8,
-    "postId": "test_post_id_12345"
-  },
-  {
-    "date": "2026-02-20",
-    "category": "general",
-    "keywords": [],
-    "slideCount": 8,
-    "postId": "test_post_id_12345"
-  },
-  {
-    "date": "2026-02-20",
-    "category": "general",
-    "keywords": [],
-    "slideCount": 8,
-    "postId": "18111705388675714"
+    "postId": "18111705388675714",
+    "_note": "업로드 시 메타데이터 누락 버그로 인해 주제 정보 없음"
   },
   {
     "date": "2026-02-20",
@@ -51,5 +24,110 @@
     ],
     "slideCount": 8,
     "postId": "17928084207217210"
+  },
+  {
+    "date": "2026-02-20",
+    "topic": "(메타데이터 복구 불가)",
+    "category": "unknown",
+    "keywords": [],
+    "slideCount": 10,
+    "postId": "17938244373139594",
+    "_note": "업로드 시 메타데이터 누락 버그로 인해 주제 정보 없음"
+  },
+  {
+    "date": "2026-02-20",
+    "topic": "(메타데이터 복구 불가)",
+    "category": "unknown",
+    "keywords": [],
+    "slideCount": 10,
+    "postId": "18192978091354077",
+    "_note": "업로드 시 메타데이터 누락 버그로 인해 주제 정보 없음"
+  },
+  {
+    "date": "2026-02-20",
+    "topic": "(메타데이터 복구 불가)",
+    "category": "unknown",
+    "keywords": [],
+    "slideCount": 8,
+    "postId": "18091081922156664",
+    "_note": "업로드 시 메타데이터 누락 버그로 인해 주제 정보 없음"
+  },
+  {
+    "date": "2026-02-21",
+    "topic": "AI 시대, 마케터가 진짜 알아야 할 것: 제로클릭 시대 생존 전략 8가지",
+    "category": "AI 마케팅",
+    "keywords": [
+      "AI마케팅",
+      "제로클릭시대",
+      "AI검색최적화",
+      "마케팅전략",
+      "브랜드발견성"
+    ],
+    "slideCount": 8,
+    "format": "tips",
+    "postId": "18053044268468014"
+  },
+  {
+    "date": "2026-02-21",
+    "topic": "(메타데이터 복구 불가)",
+    "category": "unknown",
+    "keywords": [],
+    "slideCount": 8,
+    "postId": "18086693740922581",
+    "_note": "업로드 시 메타데이터 누락 버그로 인해 주제 정보 없음"
+  },
+  {
+    "date": "2026-02-21",
+    "topic": "(메타데이터 복구 불가)",
+    "category": "unknown",
+    "keywords": [],
+    "slideCount": 8,
+    "postId": "17867158188570273",
+    "_note": "업로드 시 메타데이터 누락 버그로 인해 주제 정보 없음"
+  },
+  {
+    "date": "2026-02-21",
+    "topic": "사람들이 지갑을 여는 순간: 구매 결정을 바꾸는 소비자 심리 7가지",
+    "category": "고객 심리학",
+    "keywords": [
+      "소비자심리",
+      "구매결정",
+      "필코노미",
+      "마케팅심리학",
+      "고객심리"
+    ],
+    "slideCount": 8,
+    "format": "tips",
+    "postId": "18147224575459975"
+  },
+  {
+    "date": "2026-02-21",
+    "topic": "퍼스널 브랜딩 시작법: 평범한 내가 전문가로 보이는 7가지 방법",
+    "category": "퍼스널 브랜딩",
+    "keywords": [
+      "퍼스널브랜딩",
+      "셀프브랜딩",
+      "전문가포지셔닝",
+      "휴먼인더루프",
+      "SNS차별화"
+    ],
+    "slideCount": 8,
+    "format": "tips",
+    "postId": "18093226466082153"
+  },
+  {
+    "date": "2026-02-21",
+    "topic": "퍼스널 브랜딩 시작법: 평범한 내가 전문가로 보이는 7가지 방법",
+    "category": "퍼스널 브랜딩",
+    "keywords": [
+      "퍼스널브랜딩",
+      "셀프브랜딩",
+      "전문가포지셔닝",
+      "휴먼인더루프",
+      "SNS차별화"
+    ],
+    "slideCount": 8,
+    "format": "tips",
+    "postId": "18005764880853231"
   }
 ]

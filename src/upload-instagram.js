@@ -41,14 +41,22 @@ async function main() {
   // Step 2: Read pipeline state
   console.log('[2/6] 파이프라인 상태 읽는 중...');
   const pipelineState = JSON.parse(await readFile(PIPELINE_STATE_PATH, 'utf-8'));
-  const { finalPackage, generatedImages } = pipelineState;
+  const { finalPackage, generatedImages, contentBrief } = pipelineState;
 
   if (!finalPackage || !generatedImages || generatedImages.length === 0) {
     console.error('파이프라인 상태에 필요한 데이터가 없습니다.');
     process.exit(1);
   }
 
-  console.log(`  - 주제: ${finalPackage.topic || finalPackage.title}`);
+  // 메타데이터는 contentBrief.selectedTopic에서 가져옴 (finalPackage에는 topic 없음)
+  const selectedTopic = contentBrief?.selectedTopic || {};
+  const topicTitle = selectedTopic.title || '(주제 없음)';
+  const topicCategory = selectedTopic.category || 'general';
+  const topicKeywords = selectedTopic.keywords || [];
+  const contentFormat = contentBrief?.contentStrategy?.format || 'tips';
+
+  console.log(`  - 주제: ${topicTitle}`);
+  console.log(`  - 카테고리: ${topicCategory}`);
   console.log(`  - 이미지 수: ${generatedImages.length}`);
 
   // Step 3: Upload images to imgbb
@@ -92,8 +100,9 @@ async function main() {
 
   // Step 5: Create and publish carousel
   console.log('[5/6] 캐러셀 생성 및 게시 중...');
-  const hashtagStr = Array.isArray(finalPackage.hashtags) ? finalPackage.hashtags.join(' ') : '';
-  const caption = (finalPackage.caption || '') + (hashtagStr ? '\n\n' + hashtagStr : '');
+  // SNS 전문가 에이전트가 caption 끝에 이미 해시태그를 포함하므로
+  // hashtags 배열을 별도로 붙이지 않음 (중복 방지)
+  const caption = finalPackage.caption || '';
   console.log(`  - 캡션 길이: ${caption.length}자`);
 
   let postId;
@@ -113,10 +122,11 @@ async function main() {
   console.log('[6/6] 콘텐츠 로그 업데이트 중...');
   const logEntry = {
     date: new Date().toISOString().split('T')[0],
-    topic: finalPackage.topic || finalPackage.title,
-    category: finalPackage.category || 'general',
-    keywords: finalPackage.keywords || [],
+    topic: topicTitle,
+    category: topicCategory,
+    keywords: topicKeywords,
     slideCount: generatedImages.length,
+    format: contentFormat,
     postId: postId
   };
 

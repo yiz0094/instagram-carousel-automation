@@ -1,1 +1,116 @@
-[]
+[
+  {
+    "postId": "18111705388675714",
+    "date": "2026-02-20",
+    "topic": "(메타데이터 복구 불가)",
+    "category": "unknown",
+    "format": "tips",
+    "slideCount": 8,
+    "metrics": {
+      "reach": 1,
+      "likes": 1,
+      "comments": 0,
+      "saved": 0,
+      "shares": 0,
+      "total_interactions": 1,
+      "engagementRate": 1
+    },
+    "hashtags": [],
+    "collectedAt": "2026-02-21T15:12:09.681Z"
+  },
+  {
+    "postId": "17928084207217210",
+    "date": "2026-02-20",
+    "topic": "2026년 인스타그램 릴스 알고리즘 완전 정복: 도달률 30% 높이는 8가지 실전 전략",
+    "category": "SNS 마케팅 전략",
+    "format": "tips",
+    "slideCount": 8,
+    "metrics": {
+      "reach": 1,
+      "likes": 1,
+      "comments": 0,
+      "saved": 0,
+      "shares": 0,
+      "total_interactions": 1,
+      "engagementRate": 1
+    },
+    "hashtags": [],
+    "collectedAt": "2026-02-21T15:12:11.499Z"
+  },
+  {
+    "postId": "17938244373139594",
+    "date": "2026-02-20",
+    "topic": "(메타데이터 복구 불가)",
+    "category": "unknown",
+    "format": "tips",
+    "slideCount": 10,
+    "metrics": {
+      "reach": 1,
+      "likes": 1,
+      "comments": 0,
+      "saved": 0,
+      "shares": 0,
+      "total_interactions": 1,
+      "engagementRate": 1
+    },
+    "hashtags": [],
+    "collectedAt": "2026-02-21T15:12:13.028Z"
+  },
+  {
+    "postId": "18091081922156664",
+    "date": "2026-02-20",
+    "topic": "(메타데이터 복구 불가)",
+    "category": "unknown",
+    "format": "tips",
+    "slideCount": 8,
+    "metrics": {
+      "reach": 1,
+      "likes": 1,
+      "comments": 0,
+      "saved": 0,
+      "shares": 0,
+      "total_interactions": 1,
+      "engagementRate": 1
+    },
+    "hashtags": [],
+    "collectedAt": "2026-02-21T15:12:15.109Z"
+  },
+  {
+    "postId": "17867158188570273",
+    "date": "2026-02-21",
+    "topic": "(메타데이터 복구 불가)",
+    "category": "unknown",
+    "format": "tips",
+    "slideCount": 8,
+    "metrics": {
+      "reach": 0,
+      "likes": 0,
+      "comments": 0,
+      "saved": 0,
+      "shares": 0,
+      "total_interactions": 0,
+      "engagementRate": 0
+    },
+    "hashtags": [],
+    "collectedAt": "2026-02-21T15:12:16.912Z"
+  },
+  {
+    "postId": "18147224575459975",
+    "date": "2026-02-21",
+    "topic": "사람들이 지갑을 여는 순간: 구매 결정을 바꾸는 소비자 심리 7가지",
+    "category": "고객 심리학",
+    "format": "tips",
+    "slideCount": 8,
+    "metrics": {
+      "reach": 0,
+      "likes": 0,
+      "comments": 0,
+      "saved": 0,
+      "shares": 0,
+      "total_interactions": 0,
+      "engagementRate": 0
+    },
+    "hashtags": [],
+    "collectedAt": "2026-02-21T15:12:18.463Z"
+  }
+]

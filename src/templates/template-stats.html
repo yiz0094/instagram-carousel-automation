@@ -201,7 +201,7 @@
     }
 
     /* ============================================================
-       CONTENT SLIDE - Data point focus on dark bg
+       CONTENT SLIDE - Flowing text with inline highlights
        ============================================================ */
     .content {
       width: 1080px;
@@ -210,9 +210,9 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 80px;
+      align-items: flex-start;
+      text-align: left;
+      padding: 120px 90px;
       position: relative;
       overflow: hidden;
     }
@@ -221,7 +221,7 @@
     .content .brand-area {
       position: absolute;
       top: 60px;
-      left: 80px;
+      left: 90px;
       display: flex;
       align-items: center;
       gap: 14px;
@@ -277,9 +277,11 @@
     .content .step-bar {
       display: flex;
       gap: 8px;
-      margin-bottom: 60px;
+      margin-bottom: 48px;
       position: relative;
       z-index: 2;
+      width: 100%;
+      max-width: 900px;
     }
 
     .content .step-segment {
@@ -294,77 +296,27 @@
       opacity: 0.8;
     }
 
-    /* Stat number area */
-    .content .stat-area {
-      position: relative;
-      z-index: 2;
-      margin-bottom: 40px;
-    }
-
-    .content .stat-label {
-      font-size: 22px;
-      font-weight: 600;
-      color: var(--primary);
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      margin-bottom: 12px;
-    }
-
-    .content .stat-number {
-      font-size: 100px;
-      font-weight: 900;
-      color: var(--primary);
-      line-height: 1.1;
-      letter-spacing: -0.04em;
-    }
-
-    /* Divider */
-    .content .stat-divider {
-      width: 80px;
-      height: 4px;
-      background: var(--primary);
-      border-radius: 2px;
-      margin-bottom: 40px;
-      margin-left: auto;
-      margin-right: auto;
-      position: relative;
-      z-index: 2;
-    }
-
-    /* Content text */
-    .content .content-headline {
-      font-size: 40px;
-      font-weight: 700;
-      color: #ffffff;
-      line-height: 1.35;
-      word-break: keep-all;
-      margin-bottom: 24px;
-      position: relative;
-      z-index: 2;
-      max-width: 800px;
-    }
-
-    .content .content-body {
-      font-size: 28px;
-      font-weight: 400;
-      color: rgba(255,255,255,0.85);
-      line-height: 1.85;
+    /* Main flowing text area */
+    .content .content-text {
+      font-size: 36px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.92);
+      line-height: 1.95;
       word-break: keep-all;
       position: relative;
       z-index: 2;
-      max-width: 750px;
+      max-width: 900px;
     }
 
-    .content .content-highlight {
-      display: inline-block;
-      padding: 14px 32px;
-      border-radius: 8px;
+    /* Inline background-color highlight (marker effect) */
+    .content .content-text .text-highlight {
       background: var(--primary);
       color: #ffffff;
-      font-size: 26px;
       font-weight: 700;
-      margin-top: 40px;
-      word-break: keep-all;
+      padding: 4px 12px;
+      border-radius: 4px;
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
     }
 
     /* Bottom info area */
@@ -374,8 +326,8 @@
       align-items: center;
       position: absolute;
       bottom: 50px;
-      left: 80px;
-      right: 80px;
+      left: 90px;
+      right: 90px;
       z-index: 2;
     }
 
@@ -395,30 +347,6 @@
     /* ============================================================
        DESIGN TOKEN VARIANTS
        ============================================================ */
-
-    .content.layout-centered {
-      align-items: center;
-      text-align: center;
-    }
-    .content.layout-centered .step-bar { justify-content: center; }
-    .content.layout-centered .stat-area { text-align: center; }
-    .content.layout-centered .stat-divider { margin-left: auto; margin-right: auto; }
-    .content.layout-centered .content-headline { text-align: center; max-width: 800px; }
-    .content.layout-centered .content-body { text-align: center; max-width: 750px; }
-
-    .content.layout-card {
-      padding: 100px 80px;
-      align-items: center;
-    }
-    .content.layout-card .card-inner {
-      background: rgba(255,255,255,0.05);
-      border-radius: 24px;
-      padding: 56px 48px;
-      border: 1px solid rgba(255,255,255,0.08);
-      text-align: center;
-      max-width: 860px;
-      width: 100%;
-    }
 
     .content.bg-light-tint {
       background: linear-gradient(180deg, var(--secondary) 0%, #0d2b2f 100%);
@@ -582,7 +510,7 @@
   </div>
 
   <!-- CONTENT SLIDE -->
-  <div class="content {{layoutVariant}} {{backgroundStyle}} {{decoClass}}" id="slide-content" style="display:none;">
+  <div class="content {{backgroundStyle}} {{decoClass}}" id="slide-content" style="display:none;">
     <div class="top-accent"></div>
     <div class="bg-gradient"></div>
     <div class="bg-watermark">{{slideNumber}}</div>
@@ -594,17 +522,7 @@
 
     <div class="step-bar" id="step-bar"></div>
 
-    <div class="stat-area">
-      <div class="stat-label" id="stat-label">DATA POINT</div>
-      <div>
-        <span class="stat-number">{{highlight}}</span>
-      </div>
-    </div>
-
-    <div class="stat-divider"></div>
-
-    <h2 class="content-headline">{{headline}}</h2>
-    <div class="content-body">{{body}}</div>
+    <div class="content-text">{{body}}</div>
 
     <div class="content-bottom">
       <div class="bottom-line"></div>
@@ -645,7 +563,6 @@
 
       if (slideNumber === 1) {
         cover.style.display = 'flex';
-        // Apply cover background image if available
         var hasCoverImage = '{{hasCoverImage}}';
         if (hasCoverImage === 'true') {
           document.getElementById('cover-bg').style.backgroundImage = 'url({{coverImageUrl}})';

@@ -80,14 +80,18 @@ async function collectInsights() {
       let metrics;
 
       if (isTest) {
-        // Generate mock data for testing
+        // Generate mock data for testing (v22.0: impressions 제거, total_interactions 추가)
+        const mockLikes = Math.floor(Math.random() * 100) + 10;
+        const mockComments = Math.floor(Math.random() * 30) + 1;
+        const mockSaved = Math.floor(Math.random() * 50) + 5;
+        const mockShares = Math.floor(Math.random() * 20) + 1;
         metrics = {
-          impressions: Math.floor(Math.random() * 2000) + 500,
           reach: Math.floor(Math.random() * 1500) + 300,
-          likes: Math.floor(Math.random() * 100) + 10,
-          comments: Math.floor(Math.random() * 30) + 1,
-          saved: Math.floor(Math.random() * 50) + 5,
-          shares: Math.floor(Math.random() * 20) + 1
+          likes: mockLikes,
+          comments: mockComments,
+          saved: mockSaved,
+          shares: mockShares,
+          total_interactions: mockLikes + mockComments + mockSaved + mockShares
         };
         console.log(`[Insights][TEST] Mock data for ${entry.postId}`);
       } else {
@@ -110,12 +114,12 @@ async function collectInsights() {
         format: entry.format || 'tips',
         slideCount: entry.slideCount || 0,
         metrics: {
-          impressions: metrics.impressions || 0,
           reach: metrics.reach || 0,
           likes: metrics.likes || 0,
           comments: metrics.comments || 0,
           saved: metrics.saved || 0,
           shares: metrics.shares || 0,
+          total_interactions: metrics.total_interactions || 0,
           engagementRate: Math.round(engagementRate * 1000) / 1000
         },
         hashtags: entry.hashtags || [],

@@ -24,6 +24,16 @@ maxTurns: 15
 - **중형 해시태그** (10개): 10만~100만 게시물 (예: #마케팅전략, #콘텐츠마케팅)
 - **소형 해시태그** (10개): 1만~10만 게시물 (예: #마케팅공부, #마케터일상)
 - **니치 해시태그** (5개): 1만 미만 (예: #오늘의마케팅팁)
+- **트렌드 해시태그** (3~5개): researchResults.trendContext.trendingHashtags에서 선택
+  - 현재 인스타그램에서 실제로 인기 있는 해시태그
+  - 콘텐츠 주제와 최소한의 연관성이 있어야 함
+
+## 슬라이드 텍스트 형식 (중요!)
+slides 배열에는 editedContents의 최종 슬라이드 내용을 그대로 포함합니다.
+
+- **첫 슬라이드 (커버)**: headline, subtext, emoji
+- **중간 슬라이드 (콘텐츠)**: body만 사용. `<hl>강조</hl>` 태그로 핵심 부분 인라인 강조
+- **마지막 슬라이드 (CTA)**: headline, body, subtext, emoji
 
 ## 출력 형식
 data/pipeline-state.json을 읽어서 기존 내용을 유지한 채 `finalPackage` 필드를 추가/업데이트합니다:
@@ -37,7 +47,8 @@ data/pipeline-state.json을 읽어서 기존 내용을 유지한 채 `finalPacka
       "large": ["#대형태그"],
       "medium": ["#중형태그"],
       "small": ["#소형태그"],
-      "niche": ["#니치태그"]
+      "niche": ["#니치태그"],
+      "trending": ["#현재트렌드태그1", "#현재트렌드태그2"]
     },
     "altTexts": [
       {"slideNumber": 1, "altText": "슬라이드 설명"}
@@ -47,11 +58,20 @@ data/pipeline-state.json을 읽어서 기존 내용을 유지한 채 `finalPacka
     "slides": [
       {
         "slideNumber": 1,
-        "headline": "최종 제목",
-        "body": "최종 본문",
-        "highlight": "최종 강조",
-        "subtext": "최종 보조",
-        "emoji": "이모지"
+        "headline": "커버 제목",
+        "subtext": "부제목",
+        "emoji": "📱"
+      },
+      {
+        "slideNumber": 2,
+        "body": "본문 텍스트. <hl>강조 키워드</hl>를 포함."
+      },
+      {
+        "slideNumber": 8,
+        "headline": "CTA 제목",
+        "body": "CTA 본문",
+        "subtext": "보조 텍스트",
+        "emoji": "🚀"
       }
     ]
   }
@@ -61,6 +81,8 @@ data/pipeline-state.json을 읽어서 기존 내용을 유지한 채 `finalPacka
 ## 주의사항
 - 해시태그는 한국어와 영어를 적절히 혼합합니다
 - 캡션 첫 줄은 피드에서 보이는 부분이므로 가장 매력적으로 작성합니다
+- researchResults.trendContext의 트렌드 키워드가 있으면 캡션 첫 줄(Hook)에 자연스럽게 활용
 - 모든 텍스트는 한국어로 작성합니다
 - slides 배열에는 editedContents의 최종 슬라이드 내용을 그대로 포함합니다
+- 중간 슬라이드의 `<hl>` 태그는 수정하지 마세요 (이미지 렌더링에서 사용)
 - 캡션 끝에 해시태그를 줄바꿈으로 구분하여 배치합니다

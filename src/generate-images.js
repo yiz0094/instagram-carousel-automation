@@ -63,6 +63,12 @@ function pad(n) {
   return String(n).padStart(2, '0');
 }
 
+/** Convert <hl>text</hl> markup to <span class="text-highlight">text</span> for inline highlighting. */
+function convertHighlightMarkup(text) {
+  if (!text || typeof text !== 'string') return text;
+  return text.replace(/<hl>(.*?)<\/hl>/g, '<span class="text-highlight">$1</span>');
+}
+
 /** Replace all {{key}} placeholders in a template string. */
 function injectVariables(template, variables) {
   let result = template;
@@ -106,13 +112,6 @@ function createTestData() {
         tone: 'friendly',
         targetAudience: '소규모 비즈니스 운영자, 마케팅 초보자',
       },
-      colorScheme: {
-        primary: '#51B498',
-        secondary: '#17363C',
-        accent: '#3AA17E',
-        background: '#FAFFFE',
-        text: '#17363C',
-      },
     },
     finalPackage: {
       slides: [
@@ -124,45 +123,27 @@ function createTestData() {
         },
         {
           slideNumber: 2,
-          headline: '왜 SNS 마케팅인가?',
-          body: '전 세계 49억 명이 소셜 미디어를 사용합니다. 고객이 이미 있는 곳에서 비즈니스를 알리세요.',
-          highlight: '49억 명이 사용',
-          emoji: '🌍',
+          body: '전 세계 <hl>49억 명</hl>이 소셜 미디어를 사용합니다. 고객이 이미 있는 곳에서 비즈니스를 알리세요.',
         },
         {
           slideNumber: 3,
-          headline: '프로필 최적화하기',
-          body: '프로필 사진, 바이오, 링크를 전략적으로 구성하세요. 첫인상이 팔로우 결정의 80%를 좌우합니다.',
-          highlight: '첫인상이 80%',
-          emoji: '✨',
+          body: '프로필 사진, 바이오, 링크를 전략적으로 구성하세요. <hl>첫인상이 팔로우 결정의 80%</hl>를 좌우합니다.',
         },
         {
           slideNumber: 4,
-          headline: '콘텐츠 캘린더 만들기',
-          body: '주 3~5회 일관된 포스팅이 핵심입니다. 미리 한 달치 콘텐츠를 계획하고 예약 발행하세요.',
-          highlight: '주 3~5회 포스팅',
-          emoji: '📅',
+          body: '<hl>주 3~5회</hl> 일관된 포스팅이 핵심입니다. 미리 한 달치 콘텐츠를 계획하고 예약 발행하세요.',
         },
         {
           slideNumber: 5,
-          headline: '해시태그 전략 세우기',
-          body: '대형, 중형, 소형 해시태그를 균형 있게 조합하세요. 15~20개가 최적입니다.',
-          highlight: '15~20개 최적',
-          emoji: '#️⃣',
+          body: '대형, 중형, 소형 해시태그를 균형 있게 조합하세요. <hl>15~20개</hl>가 최적입니다.',
         },
         {
           slideNumber: 6,
-          headline: '릴스와 숏폼 활용',
-          body: '릴스는 일반 게시물 대비 도달률이 3배 이상 높습니다. 15~30초로 핵심만 전달하세요.',
-          highlight: '도달률 3배',
-          emoji: '🎬',
+          body: '릴스는 일반 게시물 대비 <hl>도달률이 3배 이상</hl> 높습니다. 15~30초로 핵심만 전달하세요.',
         },
         {
           slideNumber: 7,
-          headline: '커뮤니티와 소통하기',
-          body: '댓글, DM, 스토리 반응에 적극 응답하세요. 소통률이 높을수록 알고리즘이 더 노출합니다.',
-          highlight: '적극 응답하기',
-          emoji: '💬',
+          body: '댓글, DM, 스토리 반응에 <hl>적극 응답</hl>하세요. 소통률이 높을수록 알고리즘이 더 노출합니다.',
         },
         {
           slideNumber: 8,
@@ -270,18 +251,40 @@ async function generateImages() {
   console.log('\n  Cleaning output directory ...');
   await cleanOutputDir();
 
-  // ── 4b. Fetch cover photo from Pexels ───────────────────────────────
+  // ── 4b. Fetch cover photo from Pexels (with deduplication) ──────────
   let coverPhoto = null;
   const pexelsApiKey = process.env.PEXELS_API_KEY;
+  const usedImagesPath = path.join(PROJECT_ROOT, 'data', 'used-cover-images.json');
+  let usedCoverImages = [];
+
+  // Load previously used cover image IDs
+  try {
+    usedCoverImages = JSON.parse(await fs.readFile(usedImagesPath, 'utf-8'));
+  } catch {
+    // File doesn't exist yet – start with empty array
+  }
+  const usedPhotoIds = usedCoverImages.map(img => img.pexelsId);
 
   if (pexelsApiKey && pexelsApiKey !== 'your_pexels_api_key') {
     const topic = contentBrief?.topic || contentBrief?.selectedTopic?.title || '';
     if (topic) {
       console.log(`\n  Searching Pexels for: "${topic}" ...`);
+      if (usedPhotoIds.length > 0) {
+        console.log(`  Excluding ${usedPhotoIds.length} previously used photo(s)`);
+      }
       try {
-        coverPhoto = await searchCoverPhoto(topic, pexelsApiKey);
+        coverPhoto = await searchCoverPhoto(topic, pexelsApiKey, usedPhotoIds);
         if (coverPhoto) {
-          console.log(`  Found: photo by ${coverPhoto.photographer}`);
+          console.log(`  Found: photo by ${coverPhoto.photographer} (id: ${coverPhoto.pexelsId})`);
+
+          // Record this photo as used
+          usedCoverImages.push({
+            pexelsId: coverPhoto.pexelsId,
+            photographer: coverPhoto.photographer,
+            usedAt: new Date().toISOString().slice(0, 10),
+            topic: topic.slice(0, 50),
+          });
+          await fs.writeFile(usedImagesPath, JSON.stringify(usedCoverImages, null, 2), 'utf-8');
         } else {
           console.log('  No matching photo found, using gradient fallback');
         }
@@ -313,20 +316,22 @@ async function generateImages() {
       // Build design token variables for this slide
       const dir = slideDirectives.find(d => d.slideNumber === idx) || {};
       const designVars = {
-        layoutVariant: dir.layoutVariant && dir.layoutVariant !== 'default'
-          ? `layout-${dir.layoutVariant}` : '',
         backgroundStyle: dir.backgroundStyle && dir.backgroundStyle !== 'plain'
           ? `bg-${dir.backgroundStyle}` : '',
-        numberStyle: dir.numberStyle && dir.numberStyle !== 'large-watermark'
-          ? `num-${dir.numberStyle}` : '',
         decoClass: `deco-${globalStyle.decorativeIntensity || 'moderate'}`,
       };
 
       // Build variable map: slide fields + color scheme + design tokens + totalSlides
+      // Convert <hl> markup in body field to HTML highlight spans
+      const processedSlide = { ...slide };
+      if (processedSlide.body) {
+        processedSlide.body = convertHighlightMarkup(processedSlide.body);
+      }
+
       const variables = {
         ...colorVars,
         ...designVars,
-        ...slide,
+        ...processedSlide,
         slideNumber: String(idx),
         totalSlides: String(finalPackage.slides.length),
       };

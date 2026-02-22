@@ -1,4 +1,4 @@
-const GRAPH_API_BASE = 'https://graph.facebook.com/v21.0';
+const GRAPH_API_BASE = 'https://graph.facebook.com/v22.0';
 
 export async function createMediaContainer(igUserId, imageUrl, accessToken) {
   const url = `${GRAPH_API_BASE}/${igUserId}/media`;
@@ -70,7 +70,8 @@ export async function publishMedia(igUserId, containerId, accessToken) {
 }
 
 export async function getMediaInsights(mediaId, accessToken) {
-  const url = `${GRAPH_API_BASE}/${mediaId}/insights?metric=impressions,reach,saved,likes,comments,shares&access_token=${accessToken}`;
+  // v22.0: impressions deprecated → reach, saved, likes, comments, shares, total_interactions 사용
+  const url = `${GRAPH_API_BASE}/${mediaId}/insights?metric=reach,saved,likes,comments,shares,total_interactions&access_token=${accessToken}`;
   const res = await fetch(url);
   const data = await res.json();
   if (data.error) throw new Error(`Insights failed: ${JSON.stringify(data.error)}`);

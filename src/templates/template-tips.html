@@ -199,7 +199,7 @@
 
     /* ============================================================
        CONTENT SLIDE (middle slides)
-       Dark background + mint highlight box + white text
+       Dark background + flowing text with inline highlights
        ============================================================ */
     .content {
       width: 1080px;
@@ -208,9 +208,9 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 100px 80px;
+      align-items: flex-start;
+      text-align: left;
+      padding: 120px 90px;
       position: relative;
       overflow: hidden;
     }
@@ -219,7 +219,7 @@
     .content .brand-area {
       position: absolute;
       top: 60px;
-      left: 80px;
+      left: 90px;
       display: flex;
       align-items: center;
       gap: 14px;
@@ -249,60 +249,39 @@
       background: linear-gradient(180deg, rgba({{primaryRgb}},0.06) 0%, transparent 50%, rgba({{accentRgb}},0.04) 100%);
     }
 
-    /* Slide number - circled style */
-    .content .number-circle {
-      width: 56px;
-      height: 56px;
-      border: 2px solid rgba(255,255,255,0.25);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      font-weight: 600;
-      color: rgba(255,255,255,0.5);
-      margin-bottom: 36px;
-      position: relative;
-      z-index: 2;
-    }
-
-    .content .content-headline {
-      font-size: 44px;
-      font-weight: 700;
-      color: #ffffff;
-      line-height: 1.35;
-      letter-spacing: -0.02em;
-      word-break: keep-all;
-      margin-bottom: 36px;
-      position: relative;
-      z-index: 2;
-      max-width: 850px;
-    }
-
-    /* Highlight box - mint green background */
-    .content .content-highlight {
+    /* Tip number label */
+    .content .tip-label {
       display: inline-block;
-      padding: 14px 32px;
-      border-radius: 8px;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: 0.08em;
+      margin-bottom: 32px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Main flowing text area */
+    .content .content-text {
+      font-size: 36px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.92);
+      line-height: 1.95;
+      word-break: keep-all;
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+    }
+
+    /* Inline background-color highlight (marker effect) */
+    .content .content-text .text-highlight {
       background: var(--primary);
       color: #ffffff;
-      font-size: 30px;
       font-weight: 700;
-      margin-bottom: 36px;
-      word-break: keep-all;
-      position: relative;
-      z-index: 2;
-    }
-
-    .content .content-body {
-      font-size: 28px;
-      font-weight: 400;
-      color: rgba(255,255,255,0.85);
-      line-height: 1.85;
-      word-break: keep-all;
-      position: relative;
-      z-index: 2;
-      max-width: 800px;
+      padding: 4px 12px;
+      border-radius: 4px;
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
     }
 
     /* Bottom slide indicator */
@@ -312,8 +291,8 @@
       align-items: center;
       position: absolute;
       bottom: 50px;
-      left: 80px;
-      right: 80px;
+      left: 90px;
+      right: 90px;
       z-index: 2;
     }
 
@@ -334,29 +313,6 @@
        DESIGN TOKEN VARIANTS (set by designer agent)
        ============================================================ */
 
-    /* Layout variants */
-    .content.layout-centered {
-      align-items: center;
-      text-align: center;
-    }
-    .content.layout-centered .number-circle { margin-left: auto; margin-right: auto; }
-    .content.layout-centered .content-headline { max-width: 800px; }
-    .content.layout-centered .content-body { max-width: 750px; }
-
-    .content.layout-card {
-      padding: 100px 80px;
-      align-items: center;
-    }
-    .content.layout-card .card-inner {
-      background: rgba(255,255,255,0.06);
-      border-radius: 24px;
-      padding: 56px 48px;
-      border: 1px solid rgba(255,255,255,0.08);
-      text-align: center;
-      max-width: 860px;
-      width: 100%;
-    }
-
     /* Background style variants */
     .content.bg-light-tint {
       background: linear-gradient(180deg, var(--secondary) 0%, #0d2b2f 100%);
@@ -374,25 +330,6 @@
       background: linear-gradient(180deg, rgba({{primaryRgb}},0.15), transparent);
       z-index: 0;
     }
-
-    /* Number style variants */
-    .number-circle.num-small-badge {
-      width: 48px !important;
-      height: 48px !important;
-      font-size: 20px !important;
-      background: var(--primary);
-      border-color: var(--primary);
-      color: #ffffff !important;
-    }
-    .number-circle.num-accent-circle {
-      width: 72px !important;
-      height: 72px !important;
-      font-size: 32px !important;
-      border-width: 3px;
-      border-color: var(--primary);
-      color: var(--primary) !important;
-    }
-    .number-circle.num-hidden { display: none; }
 
     /* Decorative intensity variants */
     .content.deco-minimal .brand-area { display: none; }
@@ -524,7 +461,7 @@
   </div>
 
   <!-- CONTENT SLIDE -->
-  <div class="content {{layoutVariant}} {{backgroundStyle}} {{decoClass}}" id="slide-content" style="display:none;">
+  <div class="content {{backgroundStyle}} {{decoClass}}" id="slide-content" style="display:none;">
     <div class="bg-gradient"></div>
 
     <div class="brand-area">
@@ -532,10 +469,8 @@
       <span class="brand-name"></span>
     </div>
 
-    <div class="number-circle {{numberStyle}}">{{slideNumber}}</div>
-    <div class="content-highlight" id="highlight-box" style="display:none;">{{highlight}}</div>
-    <h2 class="content-headline">{{headline}}</h2>
-    <div class="content-body">{{body}}</div>
+    <div class="tip-label">TIP {{slideNumber}}</div>
+    <div class="content-text">{{body}}</div>
 
     <div class="content-footer">
       <div class="footer-line"></div>
@@ -585,10 +520,6 @@
         cta.style.display = 'flex';
       } else {
         content.style.display = 'flex';
-        var highlightText = '{{highlight}}';
-        if (highlightText && highlightText !== '' && highlightText !== '{{' + 'highlight}}') {
-          document.getElementById('highlight-box').style.display = 'inline-block';
-        }
       }
     })();
   </script>

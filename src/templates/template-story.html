@@ -209,7 +209,7 @@
     }
 
     /* ============================================================
-       CONTENT SLIDE - Dark editorial magazine style
+       CONTENT SLIDE - Flowing text with inline highlights
        ============================================================ */
     .content {
       width: 1080px;
@@ -218,9 +218,9 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 100px 80px 80px 80px;
+      align-items: flex-start;
+      text-align: left;
+      padding: 120px 90px;
       position: relative;
       overflow: hidden;
     }
@@ -229,7 +229,7 @@
     .content .brand-area {
       position: absolute;
       top: 60px;
-      left: 80px;
+      left: 90px;
       display: flex;
       align-items: center;
       gap: 14px;
@@ -263,70 +263,54 @@
     .content .content-slide-num {
       position: absolute;
       top: 60px;
-      right: 80px;
+      right: 90px;
       font-size: 18px;
       font-weight: 500;
       color: rgba(255,255,255,0.25);
       letter-spacing: 0.1em;
     }
 
-    /* Section headline (faded) */
-    .content .content-headline {
-      font-size: 38px;
-      font-weight: 700;
-      color: rgba(255,255,255,0.3);
-      margin-bottom: 28px;
-      word-break: keep-all;
-      letter-spacing: -0.01em;
-      position: relative;
-      z-index: 2;
-      max-width: 800px;
-    }
-
-    /* Quote area - centered with top accent bar */
-    .content .quote-area {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 28px;
-      margin-bottom: 48px;
-      position: relative;
-      z-index: 2;
-      max-width: 800px;
-    }
-
+    /* Accent bar above text */
     .content .quote-bar {
       width: 60px;
       height: 5px;
       border-radius: 3px;
       background: var(--primary);
       flex-shrink: 0;
+      margin-bottom: 36px;
+      position: relative;
+      z-index: 2;
     }
 
-    .content .quote-text {
-      font-size: 32px;
+    /* Main flowing text area */
+    .content .content-text {
+      font-size: 36px;
       font-weight: 500;
-      color: rgba(255,255,255,0.9);
-      line-height: 1.8;
+      color: rgba(255,255,255,0.92);
+      line-height: 1.95;
       word-break: keep-all;
-      text-align: center;
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
     }
 
-    .content .highlight-inline {
-      display: inline;
+    /* Inline background-color highlight (marker effect) */
+    .content .content-text .text-highlight {
       background: var(--primary);
       color: #ffffff;
-      padding: 4px 14px;
-      border-radius: 6px;
       font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 4px;
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
     }
 
     /* Decorative elements */
     .content .deco-line-bottom {
       position: absolute;
       bottom: 80px;
-      left: 80px;
-      right: 80px;
+      left: 90px;
+      right: 90px;
       height: 1px;
       background: rgba(255,255,255,0.08);
     }
@@ -334,7 +318,7 @@
     .content .page-marker {
       position: absolute;
       bottom: 50px;
-      right: 80px;
+      right: 90px;
       font-size: 16px;
       font-weight: 500;
       color: rgba(255,255,255,0.2);
@@ -355,43 +339,6 @@
     /* ============================================================
        DESIGN TOKEN VARIANTS
        ============================================================ */
-
-    .content.layout-centered {
-      align-items: center;
-      text-align: center;
-      padding: 100px 80px;
-    }
-    .content.layout-centered .quote-area {
-      flex-direction: column;
-      align-items: center;
-    }
-    .content.layout-centered .quote-bar {
-      width: 60px;
-      height: 6px;
-      align-self: center;
-    }
-    .content.layout-centered .quote-text {
-      text-align: center;
-      max-width: 750px;
-    }
-    .content.layout-centered .content-headline {
-      text-align: center;
-      max-width: 800px;
-    }
-
-    .content.layout-card {
-      padding: 100px 80px;
-      align-items: center;
-    }
-    .content.layout-card .card-inner {
-      background: rgba(255,255,255,0.05);
-      border-radius: 24px;
-      padding: 56px 48px;
-      border: 1px solid rgba(255,255,255,0.08);
-      text-align: center;
-      max-width: 860px;
-      width: 100%;
-    }
 
     .content.bg-light-tint {
       background: linear-gradient(180deg, var(--secondary) 0%, #0d2b2f 100%);
@@ -547,7 +494,7 @@
   </div>
 
   <!-- CONTENT SLIDE -->
-  <div class="content {{layoutVariant}} {{backgroundStyle}} {{decoClass}}" id="slide-content" style="display:none;">
+  <div class="content {{backgroundStyle}} {{decoClass}}" id="slide-content" style="display:none;">
     <div class="bg-gradient"></div>
 
     <div class="brand-area">
@@ -558,14 +505,8 @@
     <div class="content-slide-num">{{slideNumber}} / {{totalSlides}}</div>
     <div class="bg-number">{{slideNumber}}</div>
 
-    <h3 class="content-headline">{{headline}}</h3>
-    <div class="quote-area">
-      <div class="quote-bar"></div>
-      <div class="quote-text">
-        {{body}}
-        <span class="highlight-inline" id="highlight-inline" style="display:none;">{{highlight}}</span>
-      </div>
-    </div>
+    <div class="quote-bar"></div>
+    <div class="content-text">{{body}}</div>
 
     <div class="deco-line-bottom"></div>
     <div class="page-marker">{{slideNumber}} of {{totalSlides}}</div>
@@ -602,7 +543,6 @@
 
       if (slideNumber === 1) {
         cover.style.display = 'flex';
-        // Apply cover background image if available
         var hasCoverImage = '{{hasCoverImage}}';
         if (hasCoverImage === 'true') {
           document.getElementById('cover-bg').style.backgroundImage = 'url({{coverImageUrl}})';
@@ -614,10 +554,6 @@
         cta.style.display = 'flex';
       } else {
         content.style.display = 'flex';
-        var highlightText = '{{highlight}}';
-        if (highlightText && highlightText !== '' && highlightText !== '{{' + 'highlight}}') {
-          document.getElementById('highlight-inline').style.display = 'inline';
-        }
       }
     })();
   </script>
