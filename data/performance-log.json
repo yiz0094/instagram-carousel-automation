@@ -16,7 +16,7 @@
       "engagementRate": 1
     },
     "hashtags": [],
-    "collectedAt": "2026-02-21T15:12:09.681Z"
+    "collectedAt": "2026-02-22T23:15:12.184Z"
   },
   {
     "postId": "17928084207217210",
@@ -35,7 +35,7 @@
       "engagementRate": 1
     },
     "hashtags": [],
-    "collectedAt": "2026-02-21T15:12:11.499Z"
+    "collectedAt": "2026-02-22T23:15:13.199Z"
   },
   {
     "postId": "17938244373139594",
@@ -54,7 +54,7 @@
       "engagementRate": 1
     },
     "hashtags": [],
-    "collectedAt": "2026-02-21T15:12:13.028Z"
+    "collectedAt": "2026-02-22T23:15:14.306Z"
   },
   {
     "postId": "18091081922156664",
@@ -73,7 +73,7 @@
       "engagementRate": 1
     },
     "hashtags": [],
-    "collectedAt": "2026-02-21T15:12:15.109Z"
+    "collectedAt": "2026-02-22T23:15:15.572Z"
   },
   {
     "postId": "17867158188570273",
@@ -84,15 +84,15 @@
     "slideCount": 8,
     "metrics": {
       "reach": 0,
-      "likes": 0,
+      "likes": 1,
       "comments": 0,
       "saved": 0,
       "shares": 0,
-      "total_interactions": 0,
-      "engagementRate": 0
+      "total_interactions": 1,
+      "engagementRate": 1
     },
     "hashtags": [],
-    "collectedAt": "2026-02-21T15:12:16.912Z"
+    "collectedAt": "2026-02-22T23:15:17.015Z"
   },
   {
     "postId": "18147224575459975",
@@ -103,14 +103,33 @@
     "slideCount": 8,
     "metrics": {
       "reach": 0,
-      "likes": 0,
+      "likes": 1,
       "comments": 0,
       "saved": 0,
       "shares": 0,
-      "total_interactions": 0,
-      "engagementRate": 0
+      "total_interactions": 1,
+      "engagementRate": 1
     },
     "hashtags": [],
-    "collectedAt": "2026-02-21T15:12:18.463Z"
+    "collectedAt": "2026-02-22T23:15:18.157Z"
+  },
+  {
+    "postId": "18005764880853231",
+    "date": "2026-02-21",
+    "topic": "퍼스널 브랜딩 시작법: 평범한 내가 전문가로 보이는 7가지 방법",
+    "category": "퍼스널 브랜딩",
+    "format": "tips",
+    "slideCount": 8,
+    "metrics": {
+      "reach": 1,
+      "likes": 1,
+      "comments": 0,
+      "saved": 0,
+      "shares": 0,
+      "total_interactions": 1,
+      "engagementRate": 1
+    },
+    "hashtags": [],
+    "collectedAt": "2026-02-22T23:15:19.322Z"
   }
 ]
