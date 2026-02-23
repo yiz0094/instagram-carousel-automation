@@ -52,6 +52,20 @@
 
 **규칙**: 각 에이전트는 자신의 지정된 필드에만 쓰고, 이전 단계 데이터는 수정하지 않습니다.
 
+### contentBrief.selectedTopic 형식 주의
+마케팅 전략가가 `contentBrief.selectedTopic`을 **문자열**로 저장할 수 있습니다.
+코드에서 이 필드를 읽을 때는 반드시 문자열/객체 양쪽을 처리해야 합니다:
+```javascript
+// 올바른 방법 (문자열과 객체 모두 처리)
+const topic = typeof contentBrief?.selectedTopic === 'string'
+  ? contentBrief.selectedTopic
+  : contentBrief?.selectedTopic?.title || '';
+
+// 잘못된 방법 (문자열일 때 빈 값 반환)
+const topic = contentBrief?.selectedTopic?.title || '';  // ❌
+```
+> **과거 버그**: `selectedTopic`이 문자열일 때 `.title`이 undefined가 되어 Pexels 커버 검색이 스킵되고, 업로드 시 주제가 "(주제 없음)"으로 기록되는 문제가 있었습니다. `generate-images.js`와 `upload-instagram.js`에서 수정 완료.
+
 ## 슬라이드 텍스트 형식
 
 ### 텍스트 강조 방식 (인라인 하이라이트)
@@ -106,12 +120,20 @@ text:       #17363C  (딥틸 다크)
 > 에이전트가 다른 색상을 지정하더라도 무시되며, 항상 위 브랜드 색상이 사용됩니다.
 > 마케팅 전략가는 `colorScheme` 필드를 출력하지 않습니다.
 
+## 커버 이미지 중복 방지 체계
+- `data/used-cover-images.json`에 사용된 Pexels 사진 ID를 모두 기록
+- 이미지 생성 시 이전에 사용한 사진 ID를 제외하고 검색
+- **한 번 사용된 커버 이미지는 절대 재사용 불가** (Pexels ID 기반 필터링)
+- 모든 후보에서 제외된 경우에만 그라데이션 폴백 사용
+- 기록 형식: `{ pexelsId, photographer, usedAt, topic }`
+
 ## 주의사항
 - 모든 콘텐츠는 한국어로 작성됩니다
 - 이미지 크기: 1080x1350 (4:5 비율)
 - 캐러셀 슬라이드: 7~10장
 - 색상은 코드에서 자동 적용됩니다 (에이전트가 변경 불가)
 - 커버 슬라이드 배경 이미지는 Pexels API로 주제에 맞는 사진을 자동 검색 (API 키 없으면 그라데이션 폴백)
+- **커버 이미지는 이전 게시물과 절대 중복 불가** (`data/used-cover-images.json`으로 관리)
 - 커버 이미지 출처는 "Photo by [작가명] / Pexels" 형식으로 하단 우측에 표시
 - Instagram API 토큰은 60일마다 자동 갱신 (7일 전 갱신)
 - `.env` 파일에 API 자격 증명 저장 (절대 커밋 금지)

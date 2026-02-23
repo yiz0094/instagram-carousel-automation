@@ -48,11 +48,13 @@ async function main() {
     process.exit(1);
   }
 
-  // 메타데이터는 contentBrief.selectedTopic에서 가져옴 (finalPackage에는 topic 없음)
-  const selectedTopic = contentBrief?.selectedTopic || {};
-  const topicTitle = selectedTopic.title || '(주제 없음)';
-  const topicCategory = selectedTopic.category || 'general';
-  const topicKeywords = selectedTopic.keywords || [];
+  // 메타데이터는 contentBrief에서 가져옴 (selectedTopic이 문자열 또는 객체일 수 있음)
+  const selectedTopic = contentBrief?.selectedTopic;
+  const topicTitle = typeof selectedTopic === 'string'
+    ? selectedTopic
+    : (selectedTopic?.title || '(주제 없음)');
+  const topicCategory = contentBrief?.category || selectedTopic?.category || 'general';
+  const topicKeywords = contentBrief?.keywords || selectedTopic?.keywords || [];
   const contentFormat = contentBrief?.contentStrategy?.format || 'tips';
 
   console.log(`  - 주제: ${topicTitle}`);

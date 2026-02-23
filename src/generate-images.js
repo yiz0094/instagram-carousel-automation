@@ -266,7 +266,9 @@ async function generateImages() {
   const usedPhotoIds = usedCoverImages.map(img => img.pexelsId);
 
   if (pexelsApiKey && pexelsApiKey !== 'your_pexels_api_key') {
-    const topic = contentBrief?.topic || contentBrief?.selectedTopic?.title || '';
+    const topic = contentBrief?.topic
+      || (typeof contentBrief?.selectedTopic === 'string' ? contentBrief.selectedTopic : contentBrief?.selectedTopic?.title)
+      || '';
     if (topic) {
       console.log(`\n  Searching Pexels for: "${topic}" ...`);
       if (usedPhotoIds.length > 0) {
